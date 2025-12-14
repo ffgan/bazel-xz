@@ -57,7 +57,7 @@ jobs:
 
       - name: install deps
         run: |
-          ${{matrix.container.container-exec}} bash -c "dnf update -y && dnf install wget unzip git curl clang clang++ java-21-openjdk-devel -y"
+          ${{matrix.container.container-exec}} bash -c "dnf update -y && dnf install wget clang clang++ java-21-openjdk-devel -y"
 
       - name: download bazel 8.4.1
         run: |
@@ -65,7 +65,7 @@ jobs:
 
       - name: show bazel version
         run: |
-          ${{matrix.container.container-exec}} bash -c "cd /src && ll && chmod +x bazel && ./bazel --version"
+          ${{matrix.container.container-exec}} bash -c "cd /src && ls -al && chmod +x bazel && ./bazel --version"
 
       - name: build xz
         run: |
