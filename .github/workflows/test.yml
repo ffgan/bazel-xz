@@ -35,6 +35,8 @@ jobs:
         run: |
           cp ./bazel-xz/5.4.5.bcr.6/overlay/* ./
 
+          rm -rf bazel-xz
+
       - name: ls -al
         run: ls -al
 
