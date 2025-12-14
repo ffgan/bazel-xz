@@ -20,13 +20,16 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: ls -al
+        run: ls -al
+
       - uses: actions/checkout@v6
         with:
           repository: "tukaani-project/xz"
           ref: "v5.4.5"
 
-      - name: ls -l
-        run: ls -l
+      - name: ls -al
+        run: ls -al
 
       - name: copy overlay to xz folder
         run: |
