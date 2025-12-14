@@ -61,7 +61,7 @@ jobs:
 
       - name: download bazel 8.4.1
         run: |
-          ${{matrix.container.container-exec}} bash -c "cd /src && wget --no-check-certificate https://8.219.13.0/bazel-8.4.2-rv64 -o bazel"
+          ${{matrix.container.container-exec}} bash -c "cd /src && wget --no-check-certificate https://8.219.13.0/bazel-8.4.2-rv64 & mv bazel-8.4.2-rv64 bazel"
 
       - name: show bazel version
         run: |
