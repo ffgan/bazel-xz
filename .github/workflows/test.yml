@@ -19,24 +19,24 @@ jobs:
           ]
     steps:
       - uses: actions/checkout@v6
-
+        with:
+          repository: "tukaani-project/xz"
+          ref: "v5.4.5"
       - name: ls -al
         run: ls -al
 
       - uses: actions/checkout@v6
         with:
-          repository: "tukaani-project/xz"
-          ref: "v5.4.5"
-
+          path: "bazel"
       - name: ls -al
         run: ls -al
 
       - name: copy overlay to xz folder
         run: |
-          cp ./5.4.5.bcr.6/overlay/* ./
+          cp ./bazel/5.4.5.bcr.6/overlay/* ./
 
-      - name: ls -l
-        run: ls -l
+      - name: ls -al
+        run: ls -al
 
       - name: setup qemu
         uses: docker/setup-qemu-action@v3
