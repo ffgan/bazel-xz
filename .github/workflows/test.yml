@@ -48,7 +48,7 @@ jobs:
 
       - name: start container
         run: |
-          docker run --platform linux/riscv64 -d --name  ${{matrix.container.container-name}} -v ./:/ ${{matrix.container.image}} bash -c "while true; do sleep 30; done"
+          docker run --platform linux/riscv64 -d --name  ${{matrix.container.container-name}} -v ./:/src ${{matrix.container.image}} bash -c "while true; do sleep 30; done"
 
       - name: Show uname info
         run: |
@@ -61,19 +61,19 @@ jobs:
 
       - name: download bazel 8.4.1
         run: |
-          ${{matrix.container.container-exec}} bash -c "wget --no-check-certificate https://8.219.13.0/bazel-8.4.2-rv64 -o bazel"
+          ${{matrix.container.container-exec}} bash -c "cd /src && wget --no-check-certificate https://8.219.13.0/bazel-8.4.2-rv64 -o bazel"
 
       - name: show bazel version
         run: |
-          ${{matrix.container.container-exec}} bash -c "./bazel --version"
+          ${{matrix.container.container-exec}} bash -c "cd /src & ./bazel --version"
 
       - name: build xz
         run: |
-          ${{matrix.container.container-exec}} bash -c "./bazel build ..."
+          ${{matrix.container.container-exec}} bash -c "cd /src & ./bazel build ..."
 
       - name: check xz
         run: |
-          ${{matrix.container.container-exec}} bash -c "file bazel-bin/xz"
+          ${{matrix.container.container-exec}} bash -c "cd /src & file bazel-bin/xz"
 
       - uses: actions/upload-artifact@v4
         with:
