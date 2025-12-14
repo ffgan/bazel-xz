@@ -37,6 +37,14 @@ config_setting(
 )
 
 config_setting(
+    name = "linux_riscv64",
+    constraint_values = [
+        "@platforms//os:linux",
+        "@platforms//cpu:riscv64",
+    ],
+)
+
+config_setting(
     name = "linux_x86_64",
     constraint_values = [
         "@platforms//os:linux",
@@ -55,6 +63,17 @@ config_setting(
 expand_template(
     name = "config_linux_arm64",
     out = "config.lzma-linux-arm64.h",
+    substitutions = {
+        "{HAVE_IMMINTRIN_H}": "#undef HAVE_IMMINTRIN_H",
+        "{HAVE_CPUID_H}": "#undef HAVE_CPUID_H",
+        "{HAVE_USABLE_CLMUL}": "#undef HAVE_USABLE_CLMUL",
+    },
+    template = "config.lzma-linux.h",
+)
+
+expand_template(
+    name = "config_linux_riscv64",
+    out = "config.lzma-linux-riscv64.h",
     substitutions = {
         "{HAVE_IMMINTRIN_H}": "#undef HAVE_IMMINTRIN_H",
         "{HAVE_CPUID_H}": "#undef HAVE_CPUID_H",
@@ -84,6 +103,7 @@ copy_file(
     src = selects.with_or({
         "@platforms//os:android": "config.lzma-android.h",
         ":linux_arm64": "config.lzma-linux-arm64.h",
+        ":linux_riscv64": "config.lzma-linux-riscv64.h",
         ":linux_x86_64": "config.lzma-linux-x86_64.h",
         ":osx_arm64": "config.lzma-osx-arm64.h",
         ":osx_x86_64": "config.lzma-osx-x86_64.h",
@@ -108,6 +128,7 @@ alias(
         "@platforms//cpu:armv7": "config.lzma-ios-armv7.h",
         "@platforms//cpu:x86_64": "config.lzma-osx-x86_64.h",  # Configuration same as macOS
         "@platforms//cpu:x86_32": "config.lzma-ios-i386.h",
+        "//conditions:default": "config.lzma-osx-x86_64.h",
     }),
 )
 

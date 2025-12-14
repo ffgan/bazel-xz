@@ -10,6 +10,7 @@
         "config.lzma-ios-armv7.h": "sha256-wV+cJ6oRDNMwYRbBfjCa00bUJm2alSw3G/26jhts/+s=",
         "config.lzma-ios-i386.h": "sha256-zknHANtLrm6mpwq4x5HoNv4jHajCH9zPUvOSJYg4rZM=",
         "config.lzma-linux-aarch64.h": "sha256-vJkXIkyr7XBiAcil3NEds0QK0mlSwYv3q/26Q57CvHA=",
+        "config.lzma-linux-riscv64.h": "sha256-HYRZJSt2sHmISi8iGgU2u51HoXppZFaaWSIx9nZXPWg=",
         "config.lzma-linux.h": "sha256-nFIDgMFqfePecCXByaA/tgZEBEzA+vm8nKd7fc0cWr4=",
         "config.lzma-osx-arm64.h": "sha256-gFjMoLaSwgYofz+v2rVOwJUaUQ3iLmWKXSnzRNqtWqo=",
         "config.lzma-osx-x86_64.h": "sha256-FdFS5Ooym46ITiB/q2PDt4dP2Z75DuXwn3D9sbwNCgg=",
