@@ -77,10 +77,13 @@ jobs:
         run: |
           ${{matrix.container.container-exec}} bash -c "cd /src && file bazel-bin/xz"
 
+      - name: Copy artifact from container
+        run: docker cp f41:/src/bazel-bin/xz ./xz-rv64
+
       - uses: actions/upload-artifact@v4
         with:
           name: xz-rv64
-          path: ./bazel-bin/xz
+          path: ./xz-rv64
 
       - name: clean container
         if: always()
