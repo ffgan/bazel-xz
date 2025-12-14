@@ -1,0 +1,81 @@
+name: Build xz on riscv64
+
+on:
+  push:
+
+jobs:
+  build-on-riscv64:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        container:
+          [
+            {
+              image: "fedorariscv/base:41",
+              container-exec: "docker exec f41",
+              container-name: "f41",
+            },
+          ]
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/checkout@v6
+        with:
+          repository: "tukaani-project/xz"
+          ref: ""
+
+      - name: copy overlay to xz folder
+        run: |
+          cp ./5.4.5.bcr.6/overlay/* ./
+
+      - name: ls -l
+        run: ls -l
+
+      - name: setup qemu
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: riscv64
+
+      - name: setup docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: start container
+        run: |
+          docker run --platform linux/riscv64 -d --name  ${{matrix.container.container-name}} -v ./:/ ${{matrix.container.image}} bash -c "while true; do sleep 30; done"
+
+      - name: Show uname info
+        run: |
+          ${{matrix.container.container-exec}} uname -a
+          ${{matrix.container.container-exec}} cat /etc/os-release
+
+      - name: install deps
+        run: |
+          ${{matrix.container.container-exec}} bash -c "dnf update -y && dnf install wget unzip git curl clang clang++ java-21-openjdk-devel -y"
+
+      - name: download bazel 8.4.1
+        run: |
+          ${{matrix.container.container-exec}} bash -c "wget --no-check-certificate https://8.219.13.0/bazel-8.4.2-rv64 -o bazel"
+
+      - name: show bazel version
+        run: |
+          ${{matrix.container.container-exec}} bash -c "./bazel --version"
+
+      - name: build xz
+        run: |
+          ${{matrix.container.container-exec}} bash -c "./bazel build ..."
+
+      - name: check xz
+        run: |
+          ${{matrix.container.container-exec}} bash -c "file bazel-bin/xz"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: xz-rv64
+          path: ./bazel-bin/xz
+
+      - name: clean container
+        if: always()
+        run: |
+          docker stop ${{matrix.container.container-name}}
+          docker rm ${{matrix.container.container-name}}
