@@ -65,15 +65,15 @@ jobs:
 
       - name: show bazel version
         run: |
-          ${{matrix.container.container-exec}} bash -c "cd /src & ./bazel --version"
+          ${{matrix.container.container-exec}} bash -c "cd /src && ll && chmod +x bazel && ./bazel --version"
 
       - name: build xz
         run: |
-          ${{matrix.container.container-exec}} bash -c "cd /src & export CC=/usr/bin/clang;export CXX=/usr/bin/clang++;./bazel build ..."
+          ${{matrix.container.container-exec}} bash -c "cd /src && export CC=/usr/bin/clang;export CXX=/usr/bin/clang++;./bazel build ..."
 
       - name: check xz
         run: |
-          ${{matrix.container.container-exec}} bash -c "cd /src & file bazel-bin/xz"
+          ${{matrix.container.container-exec}} bash -c "cd /src && file bazel-bin/xz"
 
       - uses: actions/upload-artifact@v4
         with:
