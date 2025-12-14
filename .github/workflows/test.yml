@@ -69,7 +69,7 @@ jobs:
 
       - name: build xz
         run: |
-          ${{matrix.container.container-exec}} bash -c "cd /src & ./bazel build ..."
+          ${{matrix.container.container-exec}} bash -c "cd /src & export CC=/usr/bin/clang;export CXX=/usr/bin/clang++;./bazel build ..."
 
       - name: check xz
         run: |
