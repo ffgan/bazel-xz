@@ -27,13 +27,13 @@ jobs:
 
       - uses: actions/checkout@v6
         with:
-          path: "bazel"
+          path: "bazel-xz"
       - name: ls -al
         run: ls -al
 
       - name: copy overlay to xz folder
         run: |
-          cp ./bazel/5.4.5.bcr.6/overlay/* ./
+          cp ./bazel-xz/5.4.5.bcr.6/overlay/* ./
 
       - name: ls -al
         run: ls -al
